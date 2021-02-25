@@ -1,0 +1,7 @@
+[
+  ["IF", true, [
+    ["LOG", "true"]
+  ], [
+    ["LOG", "false"]
+  ]]
+]

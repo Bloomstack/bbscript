@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "bbscript"
+version = "0.1.0"
+description = "A simple script like runtime for bbscript task runner for python"
+authors = ["Felipe Orellana <forellana@bloomstack.com>"]
+license = "MIT"
+
+[tool.poetry.dependencies]
+python = "^3.6"
+click = "^7.1.2"
+ujson = "^4.0.2"
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
