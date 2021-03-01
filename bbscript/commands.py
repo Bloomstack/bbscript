@@ -1,28 +1,13 @@
 from functools import reduce
+import re
+from .errors import InvalidOperation
+from .flags import StopExecutionNoRecover
+from termcolor import colored
 from .constants import \
 	CMD_ARRAY, \
 	CMD_VAR, \
 	CMD_VAL, \
 	CMD_IF, \
-	CMD_EQUALS, \
-	CMD_NOT_EQUALS, \
-	CMD_LIKE, \
-	CMD_NOT_LIKE, \
-	CMD_GREATER_THAN, \
-	CMD_LESS_THAN, \
-	CMD_GREATER_AND_EQUAL, \
-	CMD_BETWEEN, \
-	CMD_LESS_AND_EQUAL, \
-	CMD_ADD, \
-	CMD_SUBTRACT, \
-	CMD_MULTIPLY, \
-	CMD_DIVIDE, \
-	CMD_AND, \
-	CMD_OR, \
-	CMD_NOT, \
-	CMD_XOR, \
-	CMD_TRUE, \
-	CMD_FALSE, \
 	CMD_INT, \
 	CMD_FLOAT, \
 	CMD_STRING, \
@@ -31,7 +16,14 @@ from .constants import \
 	CMD_SET, \
 	CMD_UNDEFINED, \
 	CMD_UNSUPPORTED, \
-	CMD_LOG
+	CMD_LOG, \
+	CMD_MATH, \
+	CMD_CONDITION, \
+	CMD_IS_EVEN, \
+	CMD_IS_ODD, \
+	CMD_DBUG
+import pprint
+DBUG_PP = pprint.PrettyPrinter(indent=2, depth=2)
 
 def flt(val):
 	try:
@@ -45,54 +37,106 @@ def cint(val):
 	except:
 		return 0
 
-def unsupported_function(cmd, ctx):
+def unsupported_function(ctx, cmd):
 	print("UNSUPPORTED FUNCTION: ", cmd)
 	ctx.update({
 		"error": "Unsupported command: {}".format(cmd)
 	})
+	return StopExecutionNoRecover()
 
+def cmd_math(ctx, op, left, right):
+	type_fn = flt
+	if isinstance(left, int):
+		type_fn = cint
+	if isinstance(right, int):
+		type_fn = cint
+
+	left = type_fn(left)
+	right = type_fn(right)
+
+	if op == "+":
+		return left + right
+	elif op == "-":
+		return left - right
+	elif op == "*":
+		return left * right
+	elif op == "/":
+		return left / right
+	elif op == "%":
+		return left * (right / 100)
+	elif op == "MOD":
+		return left % right
+
+	return InvalidOperation("op must be one of +, -, *, /, %, MOD")
+
+def cmd_is_even(ctx, val):
+	return flt(val) % 2 == 0
+
+def cmd_is_odd(ctx, val):
+	return flt(val) % 2 != 0
+
+def cmd_condition(ctx, op, left, right):
+	if op == "==":
+		return left == right
+	elif op == "!=":
+		return left != right
+	elif op == "~" or op == "!~":
+		pattern = right.replace(r"[\s\.%]+", ".*?")
+		result = re.match(pattern, left)
+		if op == "~":
+			return result != None
+		elif op == "!~":
+			return result == None
+	elif op == ">":
+		return left > right
+	elif op == "<":
+		return left < right
+	elif op == ">=":
+		return left >= right
+	elif op == "<=":
+		return left <= right
+	elif op == "AND":
+		return left and right
+	elif op == "OR":
+		return left or right
+	elif op == "NOT":
+		return not (left and right)
+	elif op == "XOR":
+		return bool(left) ^ bool(right)
+
+	return InvalidOperation("op must be one of ==, !=, ~, ~=, <, >, <=, >=, AND, OR, NOT, XOR")
+
+def cmd_dbug(ctx, id, cmd, label=None):
+	print(colored("[{}] {}".format(id, label if label else " Debug:"), "yellow", attrs=['bold']))
+	for line in cmd:
+		print("  ", DBUG_PP.pformat(line))
+	return cmd
 
 COMMANDS = {
-	CMD_ADD: lambda args, ctx: sum(args),
-	CMD_SUBTRACT: lambda args, ctx: reduce(lambda a, b: a - b, args),
-	CMD_MULTIPLY: lambda args, ctx: reduce(lambda a, b: a * b, args),
-	CMD_DIVIDE: lambda args, ctx: reduce(lambda a, b: a / b, args),
+	CMD_DBUG: cmd_dbug,
 
-	CMD_TRUE: lambda args, ctx: reduce(lambda a, b: a == b, args),
-	CMD_FALSE: lambda args, ctx: reduce(lambda a, b: a != b, args),
-	CMD_EQUALS: lambda args, ctx: reduce(lambda a, b: a == b, args),
-	CMD_NOT_EQUALS: lambda args, ctx: reduce(lambda a, b: a != b, args),
+	CMD_MATH: cmd_math,
+	CMD_IS_EVEN: cmd_is_even,
+	CMD_IS_ODD: cmd_is_odd,
 
-	CMD_LIKE: lambda args, ctx: args[0] in args[1],
-	CMD_NOT_LIKE: lambda args, ctx: args[0] not in args[1],
-	CMD_BETWEEN: lambda args, ctx: args[0] > args[1] and args[0] < args[2],
+	CMD_CONDITION: cmd_condition,
 
-	CMD_GREATER_THAN: lambda args, ctx: reduce(lambda a, b: flt(a) > flt(b), args),
-	CMD_GREATER_AND_EQUAL: lambda args, ctx: reduce(lambda a, b: flt(a) >= flt(b), args),
-	CMD_LESS_THAN: lambda args, ctx: reduce(lambda a, b: flt(a) < flt(b), args),
-	CMD_LESS_AND_EQUAL: lambda args, ctx: reduce(lambda a, b: flt(a) <= flt(b), args),
-
-	CMD_AND: lambda args, ctx: all(args),
-	CMD_OR: lambda args, ctx: any(args),
-	CMD_XOR: lambda args, ctx: reduce(lambda a, b: bool(a) ^ bool(b), args),
-	CMD_NOT: lambda args, ctx: not all(args),
-
-	CMD_UNDEFINED: lambda args, ctx: None,
-	CMD_INT: lambda args, ctx: cint(args[0]),
-	CMD_FLOAT: lambda args, ctx: flt(args[0]),
-	CMD_STRING: lambda args, ctx: str(args[0]),
-	CMD_BOOL: lambda args, ctx: bool(args[0]),
-	CMD_IN: lambda args, ctx: args[0] in args[1],
+	CMD_UNDEFINED: lambda ctx: None,
+	CMD_INT: lambda ctx, val: cint(val),
+	CMD_FLOAT: lambda ctx, val: flt(val),
+	CMD_STRING: lambda ctx, val: str(val),
+	CMD_BOOL: lambda ctx, val: bool(val),
+	CMD_IN: lambda ctx, a, b: a in b,
 	
-	CMD_ARRAY: lambda args, ctx: list(args),
-	CMD_VAR: lambda args, ctx: ctx.get("VAR")(args),
-	CMD_VAL: lambda args, ctx: args[0],
+	CMD_ARRAY: lambda ctx, *args: list(args),
+	CMD_VAR: lambda ctx, *args: ctx.get(args[0]),
+	CMD_VAL: lambda ctx, *args: args[0],
 
-	CMD_IF: lambda args, ctx: ctx["RUN"](args[1], ctx) if args[0] else ctx["RUN"](args[2] if len(args) > 2 else [], ctx),
+	CMD_IF: lambda ctx, cond, true_block, false_block=None: true_block if cond else false_block or [],
 
-	CMD_SET: lambda args, ctx: ctx.update({args[0]: args[1]}),
+	CMD_SET: lambda ctx, *args: ctx.update({args[0]: args[1]}),
 
-	CMD_LOG: lambda args, ctx: print(*args),
+	CMD_LOG: lambda ctx, *args: print(*args),
 
-	CMD_UNSUPPORTED: lambda args, ctx: unsupported_function(args[0], ctx)
+	CMD_UNSUPPORTED: lambda ctx, *args: unsupported_function(ctx, args[0])
 }

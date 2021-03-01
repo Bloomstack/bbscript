@@ -1,75 +1,81 @@
+from copy import deepcopy
 from .constants import \
-	TYPE_BLOCK, \
-	TYPE_BOOLEAN, \
-	TYPE_EXPRESSION, \
-	TYPE_LIST, \
-	TYPE_NUMERIC, \
-	TYPE_STRING, \
 	CMD_UNSUPPORTED, \
-	CMD_ARRAY, \
-	STEP_BEFORE, \
-	STEP_AFTER
-
+	CMD_ARRAY
 from .commands import COMMANDS
-import time
+from .errors import SyntaxError
+from .flags import StopExecutionNoRecover, RepeatStatement
 
-def prime_context(ctx):
-	ctx.update(COMMANDS)
-	ctx.update({
-		"RUN": lambda script, ctx: run(script, ctx)
-	})
+class Runtime:
+	def __init__(self, script, ctx):
+		self.ctx = ctx or {}
+		self.ctx.update(COMMANDS)
+		self.ctx.update({
+			"#EXEC_LINE": self.exec_line
+		})
+		self.script = deepcopy(script)
 
-def run(script, ctx):
-	prime_context(ctx)
-	run_block(script, ctx)
+	def update_context(self, ctx):
+		self.ctx.update(ctx)
 
-def run_block(block, ctx):
-	for statement in block:
-		resolve_expression(statement, ctx)
+	def exec(self):
+		while len(self.script) > 0:
+			line = self.script.pop(0)
+			result = self.exec_line(line)
+			if isinstance(result, StopExecutionNoRecover):
+				print("[Early Exit!]")
+				return
 
-def resolve_expression(exp, ctx):
-	exp_type = resolve_exp_type(exp)
+			yield
 
-	if exp_type == TYPE_EXPRESSION:
+	def exec_line(self, line):
+		# assert line is an array
+		if not isinstance(line, list):
+			raise SyntaxError("BBScript blocks may only contain arrays.")
+
+		# Test line, should either be a statement or a code block
+		if isinstance(line[0], str):
+			# we have a statement
+			result = self.resolve_statement(line)
+
+			if isinstance(result, RepeatStatement):
+				# repeat line if script deems statement not fullfilled
+				self.script = [line] + self.script
+			elif isinstance(result, list) and len(result) > 0 and isinstance(result[0], list):
+				# if we have another block, inject individual statements on script
+				# usually this would be the case on IF statements returning the
+				# next block to execute for example.
+				self.script = result + self.script
+			else:
+				return result
+
+		elif isinstance(list[0], list):
+			self.script = list[0] + self.script
+
+	def resolve_statement(self, exp):
 		cmd = exp[0]
-		args = [ resolve_expression(arg, ctx) for arg in exp[1:] ]
-
-		fn = ctx.get(cmd, ctx.get(CMD_UNSUPPORTED))
-		if fn == ctx.get(CMD_UNSUPPORTED):
+		fn = self.ctx.get(cmd, self.ctx.get(CMD_UNSUPPORTED))
+		if fn == self.ctx.get(CMD_UNSUPPORTED):
 			args = [cmd]
 			cmd = CMD_UNSUPPORTED
-
-		result = fn(args, ctx)
-		return result
-	elif exp_type == TYPE_LIST:
-		args = [ resolve_expression(arg, ctx) for arg in exp[1:] ]
-
-		return args
-	else:
-		return exp
-
-def resolve_exp_type(value):
-	"""Resolves data types of passed values. Internally called to distinguish expressions from data.
-	
-	Params:
-		value: * -> A value to test its type.
-
-	Returns:
-		The value type as understood by bloom brackets
-	"""
-
-	if type(value) == int or type(value) == float:
-		return TYPE_NUMERIC
-	elif type(value) == bool:
-		return TYPE_BOOLEAN
-	elif isinstance(value, str):
-		return TYPE_STRING
-	elif isinstance(value, list):
-		if value[0] == CMD_ARRAY:
-			return TYPE_LIST
-		elif isinstance(value[0], list):
-			return TYPE_BLOCK
 		else:
-			return TYPE_EXPRESSION
+			args = [ self.resolve_argument(arg) for arg in exp[1:] ]
 
-	return None
+		result = fn(self.ctx, *args)
+		return result
+
+	def resolve_argument(self, arg):
+		# check if we have a statement
+		if isinstance(arg, list):
+			if arg[0] == CMD_ARRAY:
+				# we have an array, resolve it to a list of items
+				return arg[1:]
+			elif isinstance(arg[0], list):
+				# we have a block, return it as is
+				return arg
+			else:
+				# we have a statement
+				return self.resolve_statement(arg)
+		else:
+			# we have some other native type, return that
+			return arg

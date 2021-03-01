@@ -1,1 +1,1 @@
-from .runtime import run
+from .runtime import Runtime

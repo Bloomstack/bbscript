@@ -1,7 +1,39 @@
 [
-  ["IF", true, [
-    ["LOG", "true"]
-  ], [
-    ["LOG", "false"]
-  ]]
+  ["DBUG", 1, [
+    ["IF", true,
+      [
+        ["DBUG", "1.1.1", [ ["LOG", "BRANCH: true"] ]],
+        ["DBUG", "1.1.2", [ ["SET", "branch", true] ]]
+      ], 
+      [
+        ["DBUG", "1.2.1", [ ["LOG", "BRANCHL false"] ]],
+        ["DBUG", "1.2.2", [ ["SET", "branch", false] ]]
+      ]
+    ]
+  ]],
+  ["DBUG", 2, [["LOG", "BRANCH TAKEN: ", ["VAR", "branch"]]]],
+  ["DBUG", 3, [["input"]]],
+  ["DBUG", 4, [["LOG", "Done", ["VAR", "user_input"]]]],
+  ["DBUG", 5, [["LOG", "1+1", ["MATH", "+", 1, 1]]]],
+  ["DBUG", 6, [["LOG", "true and false", ["COND", "AND", true, false]]]],
+
+
+
+  ["LOG", "RESET---"],
+  ["SET", "user_input", false],
+  ["IF", true,
+    [
+      ["LOG", "BRANCH: true"],
+      ["SET", "branch", true]
+    ], 
+    [
+      ["LOG", "BRANCHL false"],
+      ["SET", "branch", false]
+    ]
+  ],
+  ["LOG", "BRANCH TAKEN: ", ["VAR", "branch"]],
+  ["input"],
+  ["LOG", "Done", ["VAR", "user_input"]],
+  ["LOG", "1 + 1", ["MATH", "+", 1, 1]],
+  ["LOG", "true and false", ["COND", "AND", true, false]]
 ]
