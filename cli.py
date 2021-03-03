@@ -23,11 +23,16 @@ def cli():
 def run(path):
 	with open(path) as f:
 		data = ujson.load(f)
-		rt = bbscript.Runtime(data, {
+		rt = bbscript.Runtime({
 			"input": test_input
-		})
+		}, data)
 		for l in rt.exec():
 			pass
+
+@cli.command()
+def docs():
+	rt = bbscript.Runtime()
+	print(rt.docs())
 
 if __name__ == '__main__':
     cli()
