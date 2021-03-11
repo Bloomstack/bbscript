@@ -1,5 +1,5 @@
 import unittest
-from bbscript.stdlib import cmd_condition
+from bbscript.stdlib import cmd_condition, cmd_if
 from bbscript.errors import InvalidOperation
 
 class TestCondition(unittest.TestCase):
@@ -105,6 +105,10 @@ class TestCondition(unittest.TestCase):
 
 	def test_invalid_op(self):
 		self.assertRaises(InvalidOperation, lambda: cmd_condition({}, "WTF", True, True))
+
+	def test_if(self):
+		self.assertEqual(cmd_if({}, True, ["true"], ["false"]), ["true"])
+		self.assertEqual(cmd_if({}, False, ["true"], ["false"]), ["false"])
 
 if __name__ == '__main__':
     unittest.main()

@@ -9,7 +9,12 @@ from .flags import StopExecutionNoRecover, RepeatStatement
 
 class Runtime:
 	def __init__(self, ctx = None, script = None):
-		self.ctx = ctx or {}
+		self.ctx = {}
+		self.script = []
+		# copy user ctx
+		if ctx:
+			self.ctx.update(ctx)
+		# load stdlib ctx
 		load_stdlib(self.ctx)
 		self.ctx.update({
 			"#EXEC_LINE": self.exec_line
@@ -44,7 +49,7 @@ class Runtime:
 		"""Lists all variables currently in the context"""
 		for key in self.ctx.keys():
 			if key[0] == "$":
-				yield key[:1]
+				yield key[1:]
 
 	def exec(self):
 		"""Executes the loaded script returning a generator"""
@@ -79,8 +84,9 @@ class Runtime:
 			else:
 				return result
 
-		elif isinstance(list[0], list):
-			self.script = list[0] + self.script
+		elif isinstance(line[0], list):
+			# inject entire blocks into script to resolve inlined blocks
+			self.script = line + self.script
 
 	def resolve_statement(self, exp):
 		"""Resolves a statement calling nested argument statements if any provided"""

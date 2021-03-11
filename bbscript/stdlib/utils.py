@@ -5,18 +5,17 @@ def flt(val):
 	try:
 		return float(val)
 	except:
-		return 0
+		return float(0)
 
 def cint(val):
 	try:
 		return int(val)
 	except:
-		return 0
+		return int(0)
 
 def cmd_unsupported_function(ctx, cmd):
-	print("UNSUPPORTED FUNCTION: ", cmd)
 	ctx.update({
-		"error": "Unsupported command: {}".format(cmd)
+		"$error": "Unsupported command: {}".format(cmd)
 	})
 	return StopExecutionNoRecover()
 

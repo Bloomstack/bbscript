@@ -1,4 +1,5 @@
 import unittest
+from bbscript.errors import InvalidOperation
 from bbscript.stdlib.math import cmd_math
 from bbscript.stdlib.even_odd import cmd_is_even, cmd_is_odd
 
@@ -51,6 +52,9 @@ class TestMath(unittest.TestCase):
 		self.assertFalse(cmd_is_odd({}, 0))
 		self.assertTrue(cmd_is_odd({}, 1))
 		self.assertFalse(cmd_is_odd({}, 2))
+
+	def test_invalid_op(self):
+		self.assertRaises(InvalidOperation, lambda: cmd_math({}, "BAD_OP", 1, 2))
 
 if __name__ == '__main__':
     unittest.main()
