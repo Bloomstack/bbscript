@@ -25,6 +25,9 @@ def cmd_int(ctx, val):
 	)
 )
 def cmd_float(ctx, val):
+	"""
+		returns: convert a value in float type
+	"""
 	return flt(val)
 
 @bbmeta(
@@ -38,6 +41,9 @@ def cmd_float(ctx, val):
 	)
 )
 def cmd_string(ctx, val):
+	"""
+		returns: converts the value as string.
+	"""
 	return str(val)
 
 @bbmeta(
@@ -51,6 +57,9 @@ def cmd_string(ctx, val):
 	)
 )
 def cmd_bool(ctx, val):
+	"""
+		returns: it returns a true/false value
+	"""
 	return bool(val)
 
 @bbmeta(
@@ -62,4 +71,7 @@ def cmd_bool(ctx, val):
 	)
 )
 def cmd_undefined(ctx):
+	"""
+		returns: None value when there is no val.
+	"""
 	return None

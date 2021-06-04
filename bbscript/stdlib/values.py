@@ -24,15 +24,24 @@ def var_resolver(ctx, var, field):
 	)
 )
 def cmd_var(ctx, var, field=None):
+	"""
+		To get and return command variable
+	"""
 	if not field:
 		return ctx.get("${}".format(var))
 	
 	return ctx.get("${}".format(var)).get(field, None)
 
 def cmd_doc(ctx, var, meta=None):
+	"""
+		to get and return command doc
+	"""
 	return ctx.get("${}".format(var))
 
 def cmd_array(ctx, *args):
+	"""
+		to return arguments as an array
+	"""
 	return list(args)
 
 @bbmeta(
@@ -57,5 +66,8 @@ def cmd_array(ctx, *args):
 	)
 )
 def cmd_set(ctx, var, value):
+	"""
+		to update the command in the context.
+	"""
 	ctx.update({"${}".format(var): value})
 	return value

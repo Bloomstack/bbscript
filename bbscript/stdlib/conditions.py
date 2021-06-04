@@ -39,6 +39,16 @@ from ..errors import InvalidOperation
 	]
 )
 def cmd_condition(ctx, op, left, right):
+	"""
+		To perform condition operations.
+
+		Parameters:
+		-----------
+		op: operation to perform
+		left: left value
+		right: right value
+
+	"""
 	if op == "==":
 		return left == right
 	elif op == "!=":
@@ -95,4 +105,7 @@ def cmd_condition(ctx, op, left, right):
 	]
 )
 def cmd_if(ctx, cond, true_block, false_block=None):
+	"""
+		It returns true block if condition occur
+	"""
 	return true_block if cond else false_block or []
