@@ -1,0 +1,264 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>bbscript.stdlib package &#8212; BBScript Documentation 1 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="cli module" href="cli.html" />
+    <link rel="prev" title="bbscript package" href="bbscript.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="bbscript-stdlib-package">
+<h1>bbscript.stdlib package<a class="headerlink" href="#bbscript-stdlib-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-bbscript.stdlib.conditions">
+<span id="bbscript-stdlib-conditions-module"></span><h2>bbscript.stdlib.conditions module<a class="headerlink" href="#module-bbscript.stdlib.conditions" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="bbscript.stdlib.conditions.cmd_condition">
+<code class="descclassname">bbscript.stdlib.conditions.</code><code class="descname">cmd_condition</code><span class="sig-paren">(</span><em>ctx</em>, <em>op</em>, <em>left</em>, <em>right</em><span class="sig-paren">)</span><a class="headerlink" href="#bbscript.stdlib.conditions.cmd_condition" title="Permalink to this definition">¶</a></dt>
+<dd><p>To perform condition operations.</p>
+<p>op: operation to perform
+left: left value
+right: right value</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="bbscript.stdlib.conditions.cmd_if">
+<code class="descclassname">bbscript.stdlib.conditions.</code><code class="descname">cmd_if</code><span class="sig-paren">(</span><em>ctx</em>, <em>cond</em>, <em>true_block</em>, <em>false_block=None</em><span class="sig-paren">)</span><a class="headerlink" href="#bbscript.stdlib.conditions.cmd_if" title="Permalink to this definition">¶</a></dt>
+<dd><p>It returns true block if condition occur</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-bbscript.stdlib.convertions">
+<span id="bbscript-stdlib-convertions-module"></span><h2>bbscript.stdlib.convertions module<a class="headerlink" href="#module-bbscript.stdlib.convertions" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="bbscript.stdlib.convertions.cmd_bool">
+<code class="descclassname">bbscript.stdlib.convertions.</code><code class="descname">cmd_bool</code><span class="sig-paren">(</span><em>ctx</em>, <em>val</em><span class="sig-paren">)</span><a class="headerlink" href="#bbscript.stdlib.convertions.cmd_bool" title="Permalink to this definition">¶</a></dt>
+<dd><p>returns: it returns a true/false value</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="bbscript.stdlib.convertions.cmd_float">
+<code class="descclassname">bbscript.stdlib.convertions.</code><code class="descname">cmd_float</code><span class="sig-paren">(</span><em>ctx</em>, <em>val</em><span class="sig-paren">)</span><a class="headerlink" href="#bbscript.stdlib.convertions.cmd_float" title="Permalink to this definition">¶</a></dt>
+<dd><p>returns: convert a value in float type</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="bbscript.stdlib.convertions.cmd_int">
+<code class="descclassname">bbscript.stdlib.convertions.</code><code class="descname">cmd_int</code><span class="sig-paren">(</span><em>ctx</em>, <em>val</em><span class="sig-paren">)</span><a class="headerlink" href="#bbscript.stdlib.convertions.cmd_int" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="bbscript.stdlib.convertions.cmd_string">
+<code class="descclassname">bbscript.stdlib.convertions.</code><code class="descname">cmd_string</code><span class="sig-paren">(</span><em>ctx</em>, <em>val</em><span class="sig-paren">)</span><a class="headerlink" href="#bbscript.stdlib.convertions.cmd_string" title="Permalink to this definition">¶</a></dt>
+<dd><p>returns: converts the value as string.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="bbscript.stdlib.convertions.cmd_undefined">
+<code class="descclassname">bbscript.stdlib.convertions.</code><code class="descname">cmd_undefined</code><span class="sig-paren">(</span><em>ctx</em><span class="sig-paren">)</span><a class="headerlink" href="#bbscript.stdlib.convertions.cmd_undefined" title="Permalink to this definition">¶</a></dt>
+<dd><p>returns: None value when there is no val.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-bbscript.stdlib.debug">
+<span id="bbscript-stdlib-debug-module"></span><h2>bbscript.stdlib.debug module<a class="headerlink" href="#module-bbscript.stdlib.debug" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="bbscript.stdlib.debug.cmd_dbug">
+<code class="descclassname">bbscript.stdlib.debug.</code><code class="descname">cmd_dbug</code><span class="sig-paren">(</span><em>ctx</em>, <em>id</em>, <em>cmd</em>, <em>label=None</em><span class="sig-paren">)</span><a class="headerlink" href="#bbscript.stdlib.debug.cmd_dbug" title="Permalink to this definition">¶</a></dt>
+<dd><p>id:
+cmd:
+label:</p>
+<p>returns: command</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-bbscript.stdlib.even_odd">
+<span id="bbscript-stdlib-even-odd-module"></span><h2>bbscript.stdlib.even_odd module<a class="headerlink" href="#module-bbscript.stdlib.even_odd" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="bbscript.stdlib.even_odd.cmd_is_even">
+<code class="descclassname">bbscript.stdlib.even_odd.</code><code class="descname">cmd_is_even</code><span class="sig-paren">(</span><em>ctx</em>, <em>val</em><span class="sig-paren">)</span><a class="headerlink" href="#bbscript.stdlib.even_odd.cmd_is_even" title="Permalink to this definition">¶</a></dt>
+<dd><p>val     :</p>
+<blockquote>
+<div>it returns an even value</div></blockquote>
+</dd></dl>
+
+<dl class="function">
+<dt id="bbscript.stdlib.even_odd.cmd_is_odd">
+<code class="descclassname">bbscript.stdlib.even_odd.</code><code class="descname">cmd_is_odd</code><span class="sig-paren">(</span><em>ctx</em>, <em>val</em><span class="sig-paren">)</span><a class="headerlink" href="#bbscript.stdlib.even_odd.cmd_is_odd" title="Permalink to this definition">¶</a></dt>
+<dd><p>val     :</p>
+<blockquote>
+<div>it returns an odd value</div></blockquote>
+</dd></dl>
+
+</div>
+<div class="section" id="module-bbscript.stdlib.math">
+<span id="bbscript-stdlib-math-module"></span><h2>bbscript.stdlib.math module<a class="headerlink" href="#module-bbscript.stdlib.math" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="bbscript.stdlib.math.cmd_math">
+<code class="descclassname">bbscript.stdlib.math.</code><code class="descname">cmd_math</code><span class="sig-paren">(</span><em>ctx</em>, <em>op: str</em>, <em>left</em>, <em>right</em><span class="sig-paren">)</span><a class="headerlink" href="#bbscript.stdlib.math.cmd_math" title="Permalink to this definition">¶</a></dt>
+<dd><p>To perform math operations.</p>
+<p>op: Math operation to perform
+left: left value
+right: right value</p>
+<p>value of the left and right parameter with respect to the op.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-bbscript.stdlib.utils">
+<span id="bbscript-stdlib-utils-module"></span><h2>bbscript.stdlib.utils module<a class="headerlink" href="#module-bbscript.stdlib.utils" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="bbscript.stdlib.utils.cint">
+<code class="descclassname">bbscript.stdlib.utils.</code><code class="descname">cint</code><span class="sig-paren">(</span><em>val</em><span class="sig-paren">)</span><a class="headerlink" href="#bbscript.stdlib.utils.cint" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>returns an int value</div></blockquote>
+</dd></dl>
+
+<dl class="function">
+<dt id="bbscript.stdlib.utils.cmd_log">
+<code class="descclassname">bbscript.stdlib.utils.</code><code class="descname">cmd_log</code><span class="sig-paren">(</span><em>ctx</em>, <em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#bbscript.stdlib.utils.cmd_log" title="Permalink to this definition">¶</a></dt>
+<dd><p>logs the args</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="bbscript.stdlib.utils.cmd_unsupported_function">
+<code class="descclassname">bbscript.stdlib.utils.</code><code class="descname">cmd_unsupported_function</code><span class="sig-paren">(</span><em>ctx</em>, <em>cmd</em><span class="sig-paren">)</span><a class="headerlink" href="#bbscript.stdlib.utils.cmd_unsupported_function" title="Permalink to this definition">¶</a></dt>
+<dd><p>To validate unsupported commands</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="bbscript.stdlib.utils.flt">
+<code class="descclassname">bbscript.stdlib.utils.</code><code class="descname">flt</code><span class="sig-paren">(</span><em>val</em><span class="sig-paren">)</span><a class="headerlink" href="#bbscript.stdlib.utils.flt" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>returns a float value</div></blockquote>
+</dd></dl>
+
+</div>
+<div class="section" id="module-bbscript.stdlib.values">
+<span id="bbscript-stdlib-values-module"></span><h2>bbscript.stdlib.values module<a class="headerlink" href="#module-bbscript.stdlib.values" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="bbscript.stdlib.values.cmd_array">
+<code class="descclassname">bbscript.stdlib.values.</code><code class="descname">cmd_array</code><span class="sig-paren">(</span><em>ctx</em>, <em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#bbscript.stdlib.values.cmd_array" title="Permalink to this definition">¶</a></dt>
+<dd><p>to return arguments as an array</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="bbscript.stdlib.values.cmd_doc">
+<code class="descclassname">bbscript.stdlib.values.</code><code class="descname">cmd_doc</code><span class="sig-paren">(</span><em>ctx</em>, <em>var</em>, <em>meta=None</em><span class="sig-paren">)</span><a class="headerlink" href="#bbscript.stdlib.values.cmd_doc" title="Permalink to this definition">¶</a></dt>
+<dd><p>to get and return command doc</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="bbscript.stdlib.values.cmd_set">
+<code class="descclassname">bbscript.stdlib.values.</code><code class="descname">cmd_set</code><span class="sig-paren">(</span><em>ctx</em>, <em>var</em>, <em>value</em><span class="sig-paren">)</span><a class="headerlink" href="#bbscript.stdlib.values.cmd_set" title="Permalink to this definition">¶</a></dt>
+<dd><p>to update the command in the context.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="bbscript.stdlib.values.cmd_var">
+<code class="descclassname">bbscript.stdlib.values.</code><code class="descname">cmd_var</code><span class="sig-paren">(</span><em>ctx</em>, <em>var</em>, <em>field=None</em><span class="sig-paren">)</span><a class="headerlink" href="#bbscript.stdlib.values.cmd_var" title="Permalink to this definition">¶</a></dt>
+<dd><p>To get and return command variable</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="bbscript.stdlib.values.var_resolver">
+<code class="descclassname">bbscript.stdlib.values.</code><code class="descname">var_resolver</code><span class="sig-paren">(</span><em>ctx</em>, <em>var</em>, <em>field</em><span class="sig-paren">)</span><a class="headerlink" href="#bbscript.stdlib.values.var_resolver" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-bbscript.stdlib">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-bbscript.stdlib" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="bbscript.stdlib.load_stdlib">
+<code class="descclassname">bbscript.stdlib.</code><code class="descname">load_stdlib</code><span class="sig-paren">(</span><em>ctx</em><span class="sig-paren">)</span><a class="headerlink" href="#bbscript.stdlib.load_stdlib" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="modules.html">bbscript</a><ul>
+  <li><a href="bbscript.html">bbscript package</a><ul>
+      <li>Previous: <a href="bbscript.html" title="previous chapter">bbscript package</a></li>
+      <li>Next: <a href="cli.html" title="next chapter">cli module</a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, Bloomstack.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/bbscript.stdlib.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

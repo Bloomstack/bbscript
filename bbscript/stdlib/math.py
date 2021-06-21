@@ -13,6 +13,20 @@ from .utils import flt, cint
 	outputs=dict(name="result", type=dict(union=["float", "int"], match=["left", "right"]))
 )
 def cmd_math(ctx, op: str, left, right):
+	"""
+			To perform math operations.
+
+			Parameters:
+			-----------
+			op: Math operation to perform
+			left: left value
+			right: right value
+
+			Returns:
+			--------
+			value of the left and right parameter with respect to the op.
+
+	"""
 	type_fn = flt
 	if isinstance(left, int):
 		type_fn = cint

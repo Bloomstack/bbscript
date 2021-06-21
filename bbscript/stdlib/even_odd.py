@@ -9,6 +9,15 @@ from .utils import flt
 	outputs=dict(name="result", type="boolean")
 )
 def cmd_is_even(ctx, val):
+	"""
+		Parameters:
+		-----------
+		val	:
+
+		Returns
+		--------
+			it returns an even value
+	"""
 	return flt(val) % 2 == 0
 
 @bbmeta(
@@ -19,4 +28,13 @@ def cmd_is_even(ctx, val):
 	outputs=dict(name="result", type="boolean")
 )
 def cmd_is_odd(ctx, val):
+	"""
+		Parameters:
+		-----------
+		val	:
+
+		Returns
+		--------
+			it returns an odd value
+	"""
 	return flt(val) % 2 != 0
